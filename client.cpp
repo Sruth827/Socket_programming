@@ -57,7 +57,9 @@ int main()
     long long e, N;
     recv(clientSocket, &e, sizeof(e), 0);
     recv(clientSocket, &N, sizeof(N), 0);
-    
+
+
+    //SymmetricKey hardcoded for experimentation --- Switch to random generated key 
     long long symmetricKey = 16;
     cout << "Symmetric Key: " << symmetricKey << endl;
     long long encryptedKey = rsaEncrypt(symmetricKey, e, N);
@@ -76,7 +78,7 @@ int main()
             break;
         }
 
-
+        
         string encryptedMessage = xorEncryptDecrypt(message, symmetricKey);
         cout << "Client sending encrypted message: " << encryptedMessage << endl << endl;
         send(clientSocket, encryptedMessage.c_str(), encryptedMessage.size(), 0);
@@ -84,6 +86,8 @@ int main()
         memset(buffer, 0, sizeof(buffer));
         recv(clientSocket, buffer, sizeof(buffer), 0);
         string decryptedMessage = xorEncryptDecrypt(buffer, symmetricKey);
+
+        //Output for debugging
         cout << "Server response: " << buffer << endl;
         cout << "Decrypted response: " << decryptedMessage << endl;
     }
