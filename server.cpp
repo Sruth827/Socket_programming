@@ -58,7 +58,7 @@ std::string xorEncryptDecrypt(const string& input, long long key) {
 void storeMessage(const string& sender, const string& content) {
     //Establish MySQL8.0 Ubuntu Connection using mysqlxdevapi 
     try {
-        mysqlx::Session sess("mysqlx://root:****@127.0.0.1:33060");
+        mysqlx::Session sess("mysqlx://************);
         cout << "Session accepted " << endl;
         mysqlx::Schema chatDB = sess.getSchema("chat_app");
         mysqlx::Table messages = chatDB.getTable("messages");
@@ -111,7 +111,7 @@ int main(int argc, const char* argv[])
     }
     cout << "Client connected" << endl;
 
-    //Values used for RSA key sharing 
+    //Values used for RSA key sharing --- Hardcoded values just for experimentation, Larger prime numbers would be required
     long long p = 7, q = 13;
     long long e, N;
     generatePublicKey(p, q, e, N);
@@ -144,7 +144,7 @@ int main(int argc, const char* argv[])
             break;
         }
 
-        //Print message traffic for troubleshooting
+        //Print message traffic for debugging
         cout << "Message from client: " << buffer << endl;
         string decryptedMessage = xorEncryptDecrypt(buffer, decryptedKey);
         cout << "Decrypted Message : " << decryptedMessage << endl;
