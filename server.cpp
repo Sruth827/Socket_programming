@@ -58,7 +58,7 @@ std::string xorEncryptDecrypt(const string& input, long long key) {
 void storeMessage(const string& sender, const string& content) {
     //Establish MySQL8.0 Ubuntu Connection using mysqlxdevapi 
     try {
-        mysqlx::Session sess("mysqlx://root:seanr@127.0.0.1:33060");
+        mysqlx::Session sess("mysqlx://root:****@127.0.0.1:33060");
         cout << "Session accepted " << endl;
         mysqlx::Schema chatDB = sess.getSchema("chat_app");
         mysqlx::Table messages = chatDB.getTable("messages");
