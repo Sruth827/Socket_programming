@@ -6,7 +6,6 @@
 #include <arpa/inet.h>
 #include <mysqlx/xdevapi.h>
 #include <cmath>
-#include <sstream>
 #include <string>
 
 using namespace std;
@@ -64,6 +63,7 @@ void storeMessage(const string& sender, const string& content) {
         mysqlx::Schema chatDB = sess.getSchema("chat_app");
         mysqlx::Table messages = chatDB.getTable("messages");
 
+        //insert message traffic into SQL Table 'messages'
         messages.insert("sender", "content").values(sender, content).execute();
         cout << "Message stored" << endl;
     }
@@ -144,6 +144,7 @@ int main(int argc, const char* argv[])
             break;
         }
 
+        //Print message traffic for troubleshooting
         cout << "Message from client: " << buffer << endl;
         string decryptedMessage = xorEncryptDecrypt(buffer, decryptedKey);
         cout << "Decrypted Message : " << decryptedMessage << endl;
