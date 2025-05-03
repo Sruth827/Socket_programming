@@ -1,5 +1,17 @@
 #  Socket Programming with RSA Key Exchange & XOR Message Encryption 
 
+## ⚠️ Disclaimer
+
+This project is intended for **learning purposes only** and **should not be used in production**.  
+
+### Security Considerations:
+✔ The RSA implementation uses **small prime numbers**, making it **insecure for real-world encryption**.  
+✔ The **XOR-based encryption** is a basic approach and **not suitable for strong security**.  
+✔ Messages are **logged in plaintext**, which is **not recommended for actual encrypted communication**.  
+✔ The symmetric key is **hardcoded** and should be **randomly generated per session** in secure implementations.  
+
+🚀 If you plan to use encryption for real-world applications, consider **implementing AES or RSA with proper key management**.
+
 ### Overview
 This project implements a **client-server socket communication** with **RSA key exchange** for secure connection establishment, **XOR encryption** for message security, and **MySQL integration** to store network traffic. This will continue to be my repo for experimenting with socket communication and encryption methods in the future.
 
