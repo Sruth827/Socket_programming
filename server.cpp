@@ -4,7 +4,10 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <mysqlx/xdevapi.h>
 #include <cmath>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -44,7 +47,7 @@ long long rsaDecrypt(long long encryptedMessage, long long d, long long N) {
     return modExp(encryptedMessage, d, N) ; 
 }
 
-string xorEncryptDecrypt(const string& input, long long key) {
+std::string xorEncryptDecrypt(const string& input, long long key) {
     string output = input; 
     for (char& c : output) {
         c ^= key;
@@ -52,8 +55,30 @@ string xorEncryptDecrypt(const string& input, long long key) {
     return output; 
 }
 
-int main()
-{
+
+void storeMessage(const string& sender, const string& content) {
+    //Establish MySQL8.0 Ubuntu Connection using mysqlxdevapi 
+    try {
+        mysqlx::Session sess("mysqlx://root:seanr@127.0.0.1:33060");
+        cout << "Session accepted " << endl;
+        mysqlx::Schema chatDB = sess.getSchema("chat_app");
+        mysqlx::Table messages = chatDB.getTable("messages");
+
+        messages.insert("sender", "content").values(sender, content).execute();
+        cout << "Message stored" << endl;
+    }
+    catch (const mysqlx::Error& err) {
+        cerr << "MySQL X error: " << err.what() << endl;
+    }
+}
+
+
+int main(int argc, const char* argv[])
+{   
+
+    
+
+
     // Server socket creation 
     int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket < 0) {
@@ -122,6 +147,8 @@ int main()
         cout << "Message from client: " << buffer << endl;
         string decryptedMessage = xorEncryptDecrypt(buffer, decryptedKey);
         cout << "Decrypted Message : " << decryptedMessage << endl;
+        storeMessage("client", decryptedMessage);
+
 
         send(clientSocket, decryptedMessage.c_str(), decryptedMessage.size() + 1 , 0);
 
