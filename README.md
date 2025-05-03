@@ -22,7 +22,11 @@ This project implements a **client-server socket communication** with **RSA key 
 - **MySQL Connector/C++ (for MySQL X API)**
 - **Git** (for version control)
 
-### **🔹 Install Dependencies**
+### Running on WSL
+This project was developed and tested in **WSL (Windows Subsystem for Linux)**.  
+If you're using WSL, ensure that MySQL Server is installed **inside WSL**, not on Windows.
+
+### ** Install Dependencies**
 ```sh
 sudo apt update && sudo apt install g++ mysql-server libmysqlcppconn-dev
 
